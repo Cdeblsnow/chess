@@ -1,0 +1,2 @@
+module Knight
+end
