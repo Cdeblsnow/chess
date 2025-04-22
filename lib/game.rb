@@ -12,4 +12,13 @@ class Game
       @player_list << Player.new(player_name)
     end
   end
+
+  def define_side
+    first = @player_list.sample
+    first.define_side("white")
+    @player_list.each do |player|
+      second = player unless player == first
+      second&.define_side("black") # &. safe navigator
+    end
+  end
 end
