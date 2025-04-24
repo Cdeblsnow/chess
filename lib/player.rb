@@ -1,4 +1,9 @@
 require_relative "piece/pawn"
+require_relative "piece/king"
+require_relative "piece/bishop"
+require_relative "piece/knight"
+require_relative "piece/queen"
+require_relative "piece/rook"
 class Player
   attr_reader :piece_set
 
@@ -28,5 +33,9 @@ class Player
 
   def create_pawn
     8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 1])) }
+  end
+
+  def create_king
+    @piece_set << (King.new(@side, ["e", 1]))
   end
 end
