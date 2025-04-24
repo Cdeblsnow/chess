@@ -57,4 +57,13 @@ class Player
     @piece_set << (Rook.new(@side, ["a", 1]))
     @piece_set << (Rook.new(@side, ["h", 1]))
   end
+
+  def fill_set
+    create_king
+    create_queen
+    create_rooks
+    create_bishops
+    create_knights
+    create_pawns
+  end
 end
