@@ -28,4 +28,14 @@ describe Game do
       expect(player1.show_player_side).to_not eq(player2.show_player_side)
     end
   end
+
+  describe "#fill_player_pieces" do
+    subject(:game_pieces) { described_class.new }
+    it "fill player set after defining a side" do
+      game_pieces.player_init
+      game_pieces.define_side
+      player1 = game_pieces.instance_variable_get(:@player_list)[0]
+      expect(player1.piece_set.length).to eq(16)
+    end
+  end
 end
