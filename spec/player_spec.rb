@@ -9,4 +9,14 @@ describe Player do
       expect(points).to eq(1)
     end
   end
+
+  describe "#create_pawn" do
+    subject(:player_pawn) { described_class.new("test") }
+    it "creates eight pawns" do
+      player_pawn.define_side("black")
+      player_pawn.create_pawn
+      piece_set = player_pawn.instance_variable_get(:@piece_set)
+      8.times { |i| expect(piece_set[i]).to be_a(Pawn) }
+    end
+  end
 end
