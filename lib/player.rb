@@ -38,4 +38,8 @@ class Player
   def create_king
     @piece_set << (King.new(@side, ["e", 1]))
   end
+
+  def create_queen
+    @piece_set << (Queen.new(@side, ["d", 1]))
+  end
 end
