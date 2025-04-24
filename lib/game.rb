@@ -1,8 +1,12 @@
 require_relative "player"
+require_relative "piece/pawn"
 
 class Game
+  attr_accessor :player_list
+
   def initialize
     @player_list = []
+    @columns = %w[a b c d e f g h]
   end
 
   def player_init
@@ -20,5 +24,10 @@ class Game
       second = player unless player == first
       second&.define_side("black") # &. safe navigator
     end
+    fill_player_pieces
+  end
+
+  def fill_player_pieces
+    @player_list.each(&:fill_set)
   end
 end
