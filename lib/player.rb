@@ -32,7 +32,7 @@ class Player
   end
 
   def create_pawns
-    8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 1])) }
+    8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 2])) }
   end
 
   def create_king
@@ -46,5 +46,15 @@ class Player
   def create_bishops
     @piece_set << (Bishop.new(@side, ["c", 1]))
     @piece_set << (Bishop.new(@side, ["f", 1]))
+  end
+
+  def create_knights
+    @piece_set << (Knight.new(@side, ["b", 1]))
+    @piece_set << (Knight.new(@side, ["g", 1]))
+  end
+
+  def create_rooks
+    @piece_set << (Rook.new(@side, ["a", 1]))
+    @piece_set << (Rook.new(@side, ["h", 1]))
   end
 end
