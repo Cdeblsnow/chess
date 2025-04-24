@@ -49,4 +49,24 @@ describe Player do
       piece_set.each { |piece| expect(piece).to be_a(Bishop) }
     end
   end
+
+  describe "#create_knights" do
+    subject(:player_knights) { described_class.new("test") }
+    it "creates two knights" do
+      player_knights.define_side("black")
+      player_knights.create_knights
+      piece_set = player_knights.instance_variable_get(:@piece_set)
+      piece_set.each { |piece| expect(piece).to be_a(Knight) }
+    end
+  end
+
+  describe "#create_rooks" do
+    subject(:player_rooks) { described_class.new("test") }
+    it "creates two rooks" do
+      player_rooks.define_side("black")
+      player_rooks.create_rooks
+      piece_set = player_rooks.instance_variable_get(:@piece_set)
+      piece_set.each { |piece| expect(piece).to be_a(Rook) }
+    end
+  end
 end
