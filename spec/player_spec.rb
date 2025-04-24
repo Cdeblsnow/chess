@@ -19,4 +19,14 @@ describe Player do
       8.times { |i| expect(piece_set[i]).to be_a(Pawn) }
     end
   end
+
+  describe "#create_king" do
+    subject(:player_king) { described_class.new("test") }
+    it "creates a king" do
+      player_king.define_side("black")
+      player_king.create_king
+      piece_set = player_king.instance_variable_get(:@piece_set)
+      expect(piece_set[0]).to be_a(King)
+    end
+  end
 end
