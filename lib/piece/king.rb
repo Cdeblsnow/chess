@@ -1,4 +1,6 @@
 class King
+  attr_reader :value, :position
+
   def initialize(side, position)
     case side
     when "black"
@@ -6,6 +8,6 @@ class King
     when "white"
       @value = "\u{2654}"
     end
-    @position = [position]
+    @position = position
   end
 end

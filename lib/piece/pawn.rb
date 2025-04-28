@@ -1,4 +1,6 @@
 class Pawn
+  attr_reader :value, :position
+
   def initialize(side, position)
     case side
     when "black"
@@ -6,7 +8,7 @@ class Pawn
     when "white"
       @value = "\u{2659}"
     end
-    @position = [position]
+    @position = position
   end
 
   def valid_move(move)
