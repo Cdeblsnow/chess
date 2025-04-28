@@ -27,6 +27,10 @@ class Player
     @side
   end
 
+  def show_player_set
+    @piece_set
+  end
+
   def receive_set(set)
     @piece_set << set
   end
@@ -58,7 +62,7 @@ class Player
     @piece_set << (Rook.new(@side, ["h", 1]))
   end
 
-  def fill_set
+  def fill_set # this is only one set, fix it
     create_king
     create_queen
     create_rooks
