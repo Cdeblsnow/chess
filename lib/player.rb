@@ -91,7 +91,7 @@ class Player
     end
   end
 
-  def fill_set # this is only one set, fix it
+  def fill_set
     create_king
     create_queen
     create_rooks
