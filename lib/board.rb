@@ -4,14 +4,14 @@ class Board
   end
 
   def display(list)
-    current = tiles(list)
+    fill_board_tiles(list)
+    current = tiles
     puts " \n\n#{current}"
     puts "  a     b      c     d     e     f     g     h\n\n"
   end
 
-  def tiles(list)
+  def tiles
     position = +""
-    fill_board_tiles(list)
     8.downto(1) do |index|
       position << index.to_s
 
@@ -31,10 +31,12 @@ class Board
   end
 
   def fill_board_tiles(player_list)
-    set = player_list[0].piece_set
-    set.each do |piece|
-      puts piece.value
-      @board_tiles[piece.position[0]][piece.position[1]] = piece.value
+    player_list.each do |player|
+      set = player.piece_set
+      set.each do |piece|
+        puts piece.value
+        @board_tiles[piece.position[0]][piece.position[1]] = piece.value
+      end
     end
   end
 end
