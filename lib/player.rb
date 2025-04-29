@@ -35,31 +35,60 @@ class Player
     @piece_set << set
   end
 
+  # since downto is used for the display, the order had to be interchanged so it reflects correctly when
+  # printed on the console
   def create_pawns
-    8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 2])) }
+    if @side == "white"
+      8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 7])) }
+    else
+      8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 2])) }
+    end
   end
 
   def create_king
-    @piece_set << (King.new(@side, ["e", 1]))
+    @piece_set << if @side == "white"
+                    King.new(@side, ["e", 8])
+                  else
+                    King.new(@side, ["e", 1])
+                  end
   end
 
   def create_queen
-    @piece_set << (Queen.new(@side, ["d", 1]))
+    @piece_set << if @side == "white"
+                    Queen.new(@side, ["d", 8])
+                  else
+                    Queen.new(@side, ["d", 1])
+                  end
   end
 
   def create_bishops
-    @piece_set << (Bishop.new(@side, ["c", 1]))
-    @piece_set << (Bishop.new(@side, ["f", 1]))
+    if @side == "white"
+      @piece_set << (Bishop.new(@side, ["c", 8]))
+      @piece_set << (Bishop.new(@side, ["f", 8]))
+    else
+      @piece_set << (Bishop.new(@side, ["c", 1]))
+      @piece_set << (Bishop.new(@side, ["f", 1]))
+    end
   end
 
   def create_knights
-    @piece_set << (Knight.new(@side, ["b", 1]))
-    @piece_set << (Knight.new(@side, ["g", 1]))
+    if @side == "white"
+      @piece_set << (Knight.new(@side, ["b", 8]))
+      @piece_set << (Knight.new(@side, ["g", 8]))
+    else
+      @piece_set << (Knight.new(@side, ["b", 1]))
+      @piece_set << (Knight.new(@side, ["g", 1]))
+    end
   end
 
   def create_rooks
-    @piece_set << (Rook.new(@side, ["a", 1]))
-    @piece_set << (Rook.new(@side, ["h", 1]))
+    if @side == "white"
+      @piece_set << (Rook.new(@side, ["a", 8]))
+      @piece_set << (Rook.new(@side, ["h", 8]))
+    else
+      @piece_set << (Rook.new(@side, ["a", 1]))
+      @piece_set << (Rook.new(@side, ["h", 1]))
+    end
   end
 
   def fill_set # this is only one set, fix it
