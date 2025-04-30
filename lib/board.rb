@@ -16,8 +16,8 @@ class Board
       position << index.to_s
 
       @board_tiles.each_value do |value|
-        piece = value[index].to_s unless value[index].empty?
-        position << " \u{1FB7D} #{piece || ' '} \u{1FB7E}"
+        piece = value[index] unless value[index].is_a?(Array)
+        position << " \u{1FB7D} #{piece&.value || ' '} \u{1FB7E}"
       end
       position << "\n"
 
@@ -34,9 +34,14 @@ class Board
     player_list.each do |player|
       set = player.piece_set
       set.each do |piece|
-        puts piece.value
-        @board_tiles[piece.position[0]][piece.position[1]] = piece.value
+        @board_tiles[piece.position[0]][piece.position[1]] = piece
       end
     end
+  end
+
+  def select_piece(position)
+    moves = +""
+    piece = @board_tiles[position[0]][position[1].to_i]
+    piece.possible_moves.each { |m| moves << m.to_s }
   end
 end
