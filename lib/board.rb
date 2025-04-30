@@ -39,9 +39,19 @@ class Board
     end
   end
 
-  def select_piece(position)
+  def select_piece_to(player_move, input)
+    piece = @board_tiles[input[0]][input[1].to_i]
+    # Piece moves to =>
+    p piece.possible_moves[player_move - 1]
+  end
+
+  def present_move_choices(position)
     moves = +""
+    moves << "For your selected pice these are your possible movements: "
     piece = @board_tiles[position[0]][position[1].to_i]
-    piece.possible_moves.each { |m| moves << m.to_s }
+    piece.possible_moves.each_with_index do |m, i|
+      moves << "#{i + 1}:#{m} "
+    end
+    puts moves
   end
 end
