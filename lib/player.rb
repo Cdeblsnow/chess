@@ -5,7 +5,7 @@ require_relative "piece/knight"
 require_relative "piece/queen"
 require_relative "piece/rook"
 class Player
-  attr_reader :piece_set
+  attr_reader :piece_set, :name
 
   COLUMNS = %w[a b c d e f g h].freeze
   def initialize(name)
