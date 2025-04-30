@@ -2,7 +2,7 @@ require_relative "player"
 require_relative "piece/pawn"
 
 class Game
-  attr_accessor :player_list
+  attr_reader :player_list
 
   def initialize
     @player_list = []
