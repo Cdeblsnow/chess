@@ -1,10 +1,12 @@
 class Board
   def initialize
     @board_tiles = ("a".."h").to_h { |i| [i, Array.new(9) { [] }] }
+    @has_been_filled = false
+    @moves = []
   end
 
   def display(list)
-    fill_board_tiles(list)
+    fill_board_tiles(list) if @has_been_filled == false
     current = tiles
     puts " \n\n#{current}"
     puts "  a     b      c     d     e     f     g     h\n\n"
@@ -37,21 +39,40 @@ class Board
         @board_tiles[piece.position[0]][piece.position[1]] = piece
       end
     end
+    @has_been_filled = true
+  end
+
+  def present_move_choices(position) # I have to grap the choice, from moves
+    @moves = []
+    @moves << "For your selected pice these are your possible movements: "
+    piece = @board_tiles[position[0]][position[1].to_i]
+    piece.possible_moves.each_with_index do |m, i|
+      @moves << ["#{i + 1}:", "#{m}"]
+    end
+    puts @moves.join(" ")
   end
 
   def select_piece_to(player_move, input)
     piece = @board_tiles[input[0]][input[1].to_i]
-    # Piece moves to =>
-    p piece.possible_moves[player_move - 1]
+    moves = piece.possible_moves
+    piece_move(player_move, input)
+    puts "#{piece.value} moves to => #{moves[player_move - 1]}"
   end
 
-  def present_move_choices(position)
-    moves = +""
-    moves << "For your selected pice these are your possible movements: "
-    piece = @board_tiles[position[0]][position[1].to_i]
-    piece.possible_moves.each_with_index do |m, i|
-      moves << "#{i + 1}:#{m} "
-    end
-    puts moves
+  def piece_move(player_move, input)
+    column = @moves[player_move][1][2] # change only the first number to iterate over the array
+    row = @moves[player_move][1][6].to_i
+    piece_update(@board_tiles[input[0]][input[1].to_i], column, row)
+    tiles_update(@board_tiles[input[0]][input[1].to_i], column, row)
+    @board_tiles[input[0]][input[1].to_i] = []
+    puts @board_tiles[column][row]
+  end
+
+  def piece_update(piece, column, row)
+    piece.update_position([column, row])
+  end
+
+  def tiles_update(tile, column, row)
+    @board_tiles[column][row] = tile
   end
 end
