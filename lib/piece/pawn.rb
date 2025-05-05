@@ -9,25 +9,27 @@ class Pawn
       @value = "\u{2659}"
     end
     @position = position
+    @original_position = position
     @first_move = false
   end
 
   def possible_moves
-    moves = []
+    moves = [] # check for the methods that use possible movements and remove to_i
+    p @position
     case @value
     when "\u{265F}"
-      if @first_move == false
-        moves << [@position[0], @position[1] + 2]
-        @first_move == true
-      end
-      moves << [@position[0], @position[1] + 1]
+      moves << [@position[0], @position[1].to_i + 2] if @first_move == false
+      moves << [@position[0], @position[1].to_i + 1]
     when "\u{2659}"
-      if @first_move == false
-        moves << [@position[0], @position[1] - 2]
-        @first_move == true
-      end
-      moves << [@position[0], @position[1] - 1]
+      moves << [@position[0], @position[1].to_i - 2] if @first_move == false
+      moves << [@position[0], @position[1].to_i - 1]
     end
     moves
+  end
+
+  def update_position(new_position)
+    @position = new_position
+    puts @position
+    @first_move = true
   end
 end
