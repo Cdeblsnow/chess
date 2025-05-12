@@ -64,43 +64,43 @@ class Bishop
       break if !position.is_a?(Array) && (position&.side == @side)
       next if @position == position.flatten
 
-      # if the pice is from the same side stop
-
       @moves << position.flatten
       break if !position.is_a?(Array) && position&.value
-      # if the pice is from the other side add move and then stop
     end
   end
 
   def right_downward_diagonal
     (1..8).size.times do |i|
-      break if @position[1].to_i + 1 < 1
-      break if board[COLUMNS[@column_index + i], @position[1].to_i - 1].side == @side
+      position = []
+      break if @position[1].to_i - i < 1
+      break if COLUMNS[@column_index + i].nil?
 
-      # if the pice is from the same side stop
+      position << [COLUMNS[@column_index + i], @position[1].to_i - i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
 
-      @moves << [COLUMNS[@column_index + i], @position[1].to_i - 1]
-      break if board[COLUMNS[@column_index + i], @position[1].to_i - 1].value
-      # if the pice is from the other side add move and then stop
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def lef_downward_diagonal
     (1..8).size.times do |i|
-      break if @position[1].to_i + 1 < 1
-      break if board[COLUMNS[@column_index - i], @position[1].to_i - 1].side == @side
+      position = []
+      break if @position[1].to_i - i < 1
+      break if COLUMNS[@column_index - i] == "h"
 
-      # if the pice is from the same side stop
+      position << [COLUMNS[@column_index - i], @position[1].to_i - i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
 
-      @moves << [COLUMNS[@column_index - i], @position[1].to_i - 1]
-      break if board[COLUMNS[@column_index - i], @position[1].to_i - 1].value
-      # if the pice is from the other side add move and then stop
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def update_position(new_position)
     @position = new_position
+    update_column_index
   end
-
-  # test everything and then git add
 end
