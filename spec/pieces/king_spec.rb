@@ -40,4 +40,24 @@ describe King do
       expect(moves.length).to eq(1)
     end
   end
+
+  describe "#diagonal_right_up_one" do
+    subject(:king) { described_class.new("white", ["e", 1]) }
+
+    it "return one position from e1" do
+      king.diagonal_right_up_one
+      moves = king.instance_variable_get(:@moves)
+      expect(moves.length).to eq(1)
+    end
+  end
+
+  describe "#diagonal_left_up_one" do
+    subject(:king) { described_class.new("white", ["e", 1]) }
+
+    it "return one position from e1" do
+      king.diagonal_left_up_one
+      moves = king.instance_variable_get(:@moves)
+      expect(moves.length).to eq(1)
+    end
+  end
 end
