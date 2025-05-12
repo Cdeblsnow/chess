@@ -1,6 +1,6 @@
 require_relative "../../lib/piece/bishop"
 
-describe Bishop do
+describe Bishop do # rubocop:disable Metrics/BlockLength
   describe "#right_upward_diagonal" do
     subject(:bishop) { described_class.new("white", ["c", 1]) }
     before do
@@ -68,6 +68,20 @@ describe Bishop do
       bishop.right_downward_diagonal
       moves = bishop.instance_variable_get(:@moves)
       expect(moves.length).to eq(2)
+    end
+  end
+
+  describe "#possible_moves" do
+    subject(:bishop) { described_class.new("white", ["c", 1]) }
+    before do
+      bishop.update_column_index
+    end
+
+    it "return seven positions from c1" do
+      bishop.possible_moves
+      moves = bishop.instance_variable_get(:@moves)
+
+      expect(moves.length).to eq(7)
     end
   end
 end
