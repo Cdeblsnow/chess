@@ -35,7 +35,6 @@ class King
     1.times do # rubocop:disable Lint/UselessTimes
       position = []
       break if @position[1].to_i + 1 > 8
-      break if COLUMNS[@column_index + 1].nil?
 
       position << [COLUMNS[@column_index], @position[1].to_i + 1]
       break if !position.is_a?(Array) && (position&.side == @side)
@@ -50,12 +49,9 @@ class King
     1.times do # rubocop:disable Lint/UselessTimes
       position = []
       break if @position[1].to_i - 1 < 1
-      break if COLUMNS[@column_index + 1].nil?
 
       position << [COLUMNS[@column_index], @position[1].to_i - 1]
       break if !position.is_a?(Array) && (position&.side == @side)
-
-      # if the pice is from the same side stop
 
       @moves << position.flatten
     end
@@ -63,19 +59,25 @@ class King
 
   def right_one
     1.times do # rubocop:disable Lint/UselessTimes
-      break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index + 1], @position[1].to_i].side == @side
+      position = []
+      break if COLUMNS[@column_index + 1].nil?
 
-      @moves << [COLUMNS[@column_index + 1], @position[1].to_i]
+      position << [COLUMNS[@column_index + 1], @position[1].to_i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+
+      @moves << position.flatten
     end
   end
 
   def left_one
     1.times do # rubocop:disable Lint/UselessTimes
-      break if @position[1].to_i + 1 < 1
-      break if board[COLUMNS[@column_index - 1], @position[1].to_i].side == @side
+      position = []
+      break if COLUMNS[@column_index - 1] == "h"
 
-      @moves << [COLUMNS[@column_index - 1], @position[1].to_i]
+      position << [COLUMNS[@column_index - 1], @position[1].to_i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+
+      @moves << position.flatten
     end
   end
 
