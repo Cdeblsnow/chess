@@ -20,7 +20,6 @@ class Bishop
 
   def possible_moves
     @moves = []
-    update_column_index
     case @value
     when "\u{265D}"
       lef_downward_diagonal
