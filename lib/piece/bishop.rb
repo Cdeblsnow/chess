@@ -18,26 +18,25 @@ class Bishop
     @column_index = COLUMNS.index(@position[0])
   end
 
-  def possible_moves(board)
+  def possible_moves
     @moves = []
     update_column_index
     case @value
     when "\u{265D}"
-      lef_downward_diagonal(board)
-      right_downward_diagonal(board)
-      lef_upward_diagonal(board)
-      right_upward_diagonal(board)
+      lef_downward_diagonal
+      right_downward_diagonal
+      lef_upward_diagonal
+      right_upward_diagonal
     when "\u{2657}"
-      lef_upward_diagonal(board)
-      right_upward_diagonal(board)
-      lef_downward_diagonal(board)
-      right_downward_diagonal(board)
+      lef_upward_diagonal
+      right_upward_diagonal
+      lef_downward_diagonal
+      right_downward_diagonal
     end
     @moves
   end
 
-  # add @board, maybe a module?, same with columns
-  def right_upward_diagonal(board)
+  def right_upward_diagonal
     (1..8).size.times do |i|
       position = []
       break if @position[1].to_i + i > 8
@@ -55,7 +54,7 @@ class Bishop
     end
   end
 
-  def lef_upward_diagonal(board)
+  def lef_upward_diagonal
     (1..8).size.times do |i|
       position = []
       break if @position[1].to_i + i > 8
@@ -73,7 +72,7 @@ class Bishop
     end
   end
 
-  def right_downward_diagonal(board)
+  def right_downward_diagonal
     (1..8).size.times do |i|
       break if @position[1].to_i + 1 < 1
       break if board[COLUMNS[@column_index + i], @position[1].to_i - 1].side == @side
@@ -86,7 +85,7 @@ class Bishop
     end
   end
 
-  def lef_downward_diagonal(board)
+  def lef_downward_diagonal
     (1..8).size.times do |i|
       break if @position[1].to_i + 1 < 1
       break if board[COLUMNS[@column_index - i], @position[1].to_i - 1].side == @side
