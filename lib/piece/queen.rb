@@ -73,15 +73,18 @@ class Queen
 
   def left
     (1..8).size.times do |i|
-      break if @position[1].to_i + 1 < 1
-      break if board[COLUMNS[@column_index - i], @position[1].to_i].side == @side
+      position = []
+      break if COLUMNS[@column_index - i] == "h"
 
-      @moves << [COLUMNS[@column_index - i], @position[1].to_i]
-      break if [COLUMNS[@column_index - i], @position[1].to_i].value
+      position << [COLUMNS[@column_index - i], @position[1].to_i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
     end
   end
 
-  def diagonal_right
+  def diagonal_right_up
     (1..8).size.times do |i|
       break if @position[1].to_i + 1 > 8
       break if board[COLUMNS[@column_index + i], @position[1].to_i + i].side == @side
@@ -91,7 +94,7 @@ class Queen
     end
   end
 
-  def diagonal_left
+  def diagonal_left_up
     (1..8).size.times do |i|
       break if @position[1].to_i + 1 < 1
       break if board[COLUMNS[@column_index - i], @position[1].to_i - i].side == @side
