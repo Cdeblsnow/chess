@@ -107,7 +107,34 @@ class King
     end
   end
 
+  def diagonal_right_down_one
+    1.times do # rubocop:disable Lint/UselessTimes
+      position = []
+      break if @position[1].to_i - 1 < 1
+      break if COLUMNS[@column_index + 1].nil?
+
+      position << [COLUMNS[@column_index + 1], @position[1].to_i - 1]
+      break if !position.is_a?(Array) && (position&.side == @side)
+
+      @moves << position.flatten
+    end
+  end
+
+  def diagonal_left_down_one
+    1.times do # rubocop:disable Lint/UselessTimes
+      position = []
+      break if @position[1].to_i - 1 < 1
+      break if COLUMNS[@column_index - 1] == "h"
+
+      position << [COLUMNS[@column_index - 1], @position[1].to_i - 1]
+      break if !position.is_a?(Array) && (position&.side == @side)
+
+      @moves << position.flatten
+    end
+  end
+
   def update_position(new_position)
     @position = new_position
+    update_column_index
   end
 end
