@@ -40,4 +40,24 @@ describe Queen do
       expect(moves.length).to eq(3)
     end
   end
+
+  describe "#diagonal_right_up_one" do
+    subject(:queen) { described_class.new("white", ["d", 1]) }
+
+    it "return four position from d1" do
+      queen.diagonal_right_up
+      moves = queen.instance_variable_get(:@moves)
+      expect(moves.length).to eq(4)
+    end
+  end
+
+  describe "#diagonal_left_up_one" do
+    subject(:queen) { described_class.new("white", ["d", 1]) }
+
+    it "return three position from d1" do
+      queen.diagonal_left_up
+      moves = queen.instance_variable_get(:@moves)
+      expect(moves.length).to eq(3)
+    end
+  end
 end
