@@ -42,6 +42,8 @@ class Queen
       # if the pice is from the same side stop
 
       @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
+      # if the pice is from the other side add move and then stop
     end
   end
 
@@ -55,6 +57,7 @@ class Queen
       next if @position == position.flatten
 
       @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
@@ -68,6 +71,7 @@ class Queen
       next if @position == position.flatten
 
       @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
@@ -81,26 +85,40 @@ class Queen
       next if @position == position.flatten
 
       @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def diagonal_right_up
     (1..8).size.times do |i|
-      break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index + i], @position[1].to_i + i].side == @side
+      position = []
+      break if @position[1].to_i + i > 8
+      break if COLUMNS[@column_index + i].nil?
 
-      @moves << [COLUMNS[@column_index + i], @position[1].to_i + i]
-      break if [COLUMNS[@column_index + i], @position[1].to_i + i].value
+      position << [COLUMNS[@column_index + i], @position[1].to_i + i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      # if the pice is from the same side stop
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
+      # if the pice is from the other side add move and then stop
     end
   end
 
   def diagonal_left_up
     (1..8).size.times do |i|
-      break if @position[1].to_i + 1 < 1
-      break if board[COLUMNS[@column_index - i], @position[1].to_i - i].side == @side
+      position = []
+      break if @position[1].to_i + i > 8
+      break if COLUMNS[@column_index - i] == "h"
 
-      @moves << [COLUMNS[@column_index - i], @position[1].to_i - i]
-      break if [COLUMNS[@column_index - i], @position[1].to_i - i].value
+      position << [COLUMNS[@column_index - i], @position[1].to_i + i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
