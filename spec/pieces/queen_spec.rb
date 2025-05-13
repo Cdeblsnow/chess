@@ -30,4 +30,14 @@ describe Queen do
       expect(moves.length).to eq(4)
     end
   end
+
+  describe "#left" do
+    subject(:queen) { described_class.new("white", ["d", 1]) }
+
+    it "return three position from d1" do
+      queen.left
+      moves = queen.instance_variable_get(:@moves)
+      expect(moves.length).to eq(3)
+    end
+  end
 end
