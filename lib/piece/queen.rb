@@ -122,6 +122,36 @@ class Queen
     end
   end
 
+  def diagonal_right_down
+    (1..8).size.times do |i|
+      position = []
+      break if @position[1].to_i - i < 1
+      break if COLUMNS[@column_index + i].nil?
+
+      position << [COLUMNS[@column_index + i], @position[1].to_i - i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
+    end
+  end
+
+  def diagonal_left_down
+    (1..8).size.times do |i|
+      position = []
+      break if @position[1].to_i - i < 1
+      break if COLUMNS[@column_index - i] == "h"
+
+      position << [COLUMNS[@column_index - i], @position[1].to_i - i]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
+    end
+  end
+
   def update_position(new_position)
     @position = new_position
     update_column_index
