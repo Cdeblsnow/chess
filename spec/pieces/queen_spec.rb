@@ -51,13 +51,47 @@ describe Queen do
     end
   end
 
-  describe "#diagonal_left_up_one" do
+  describe "#diagonal_left_up" do
     subject(:queen) { described_class.new("white", ["d", 1]) }
 
     it "return three position from d1" do
       queen.diagonal_left_up
       moves = queen.instance_variable_get(:@moves)
       expect(moves.length).to eq(3)
+    end
+  end
+
+  describe "#diagonal_right_down" do
+    subject(:queen) { described_class.new("white", ["d", 1]) }
+
+    it "return zero position from d1" do
+      queen.diagonal_right_down
+      moves = queen.instance_variable_get(:@moves)
+      expect(moves.length).to eq(0)
+    end
+
+    it "return two positions from d3" do
+      queen.update_position(["d", 3])
+      queen.diagonal_right_down
+      moves = queen.instance_variable_get(:@moves)
+      expect(moves.length).to eq(2)
+    end
+  end
+
+  describe "#diagonal_left_down" do
+    subject(:queen) { described_class.new("white", ["d", 1]) }
+
+    it "return zero position from d1" do
+      queen.diagonal_left_down
+      moves = queen.instance_variable_get(:@moves)
+      expect(moves.length).to eq(0)
+    end
+
+    it "return two positions from d3" do
+      queen.update_position(["d", 3])
+      queen.diagonal_left_down
+      moves = queen.instance_variable_get(:@moves)
+      expect(moves.length).to eq(2)
     end
   end
 end
