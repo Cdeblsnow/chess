@@ -20,4 +20,24 @@ describe Rook do
       expect(moves.length).to eq(0)
     end
   end
+
+  describe "#right" do
+    subject(:rook) { described_class.new("white", ["a", 1]) }
+
+    it "return seven position from a1" do
+      rook.right
+      moves = rook.instance_variable_get(:@moves)
+      expect(moves.length).to eq(7)
+    end
+  end
+
+  describe "#left" do
+    subject(:rook) { described_class.new("white", ["a", 1]) }
+
+    it "return zero position from a1" do
+      rook.left
+      moves = rook.instance_variable_get(:@moves)
+      expect(moves.length).to eq(0)
+    end
+  end
 end
