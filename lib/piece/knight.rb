@@ -20,7 +20,6 @@ class Knight
 
   def possible_moves
     @moves = []
-    update_column_index
     case @value
     when "\u{265F}"
       moves << [@position[0], @position[1].to_i + 2] if @first_move == false
@@ -127,24 +126,36 @@ class Knight
 
   def left_down
     1.times do # rubocop:disable Lint/UselessTimes
-      break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index - 2], @position[1].to_i - 1].side == @side
+      position = []
+      break if @position[1].to_i - 1 < 1
+      break if COLUMNS[@column_index - 2] == "h"
 
-      @moves << [COLUMNS[@column_index - 2], @position[1].to_i - 1]
+      position << [COLUMNS[@column_index - 2], @position[1].to_i - 1]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def left_up
     1.times do # rubocop:disable Lint/UselessTimes
+      position = []
       break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index - 2], @position[1].to_i + 1].side == @side
+      break if COLUMNS[@column_index - 2] == "h"
 
-      @moves << [COLUMNS[@column_index - 2], @position[1].to_i + 1]
+      position << [COLUMNS[@column_index - 2], @position[1].to_i + 1]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def update_position(new_position)
     @position = new_position
-    @first_move = true
+    update_column_index
   end
 end
