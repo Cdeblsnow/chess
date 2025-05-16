@@ -66,4 +66,26 @@ describe Knight do
       expect(moves.length).to eq(0)
     end
   end
+
+  describe "#left_down" do
+    subject(:knight) { described_class.new("white", ["b", 1]) }
+
+    it "do not returns position from b1" do
+      knight.left_down
+      moves = knight.instance_variable_get(:@moves)
+      p moves
+      expect(moves.length).to eq(0)
+    end
+  end
+
+  describe "#left_up" do
+    subject(:knight) { described_class.new("white", ["b", 1]) }
+
+    it "do not returns position from b1" do
+      knight.left_up
+      moves = knight.instance_variable_get(:@moves)
+      p moves
+      expect(moves.length).to eq(0)
+    end
+  end
 end
