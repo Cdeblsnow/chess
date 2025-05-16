@@ -67,37 +67,61 @@ class Knight
 
   def right_up
     1.times do # rubocop:disable Lint/UselessTimes
+      position = []
       break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index + 2], @position[1].to_i + 1].side == @side
+      break if COLUMNS[@column_index + 1].nil?
 
-      @moves << [COLUMNS[@column_index + 2], @position[1].to_i + 1]
+      position << [COLUMNS[@column_index + 2], @position[1].to_i + 1]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def right_down
     1.times do # rubocop:disable Lint/UselessTimes
-      break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index + 2], @position[1].to_i - 1].side == @side
+      position = []
+      break if @position[1].to_i - 1 < 1
+      break if COLUMNS[@column_index + 1].nil?
 
-      @moves << [COLUMNS[@column_index + 2], @position[1].to_i - 1]
+      position << [COLUMNS[@column_index + 2], @position[1].to_i - 1]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def down_right
     1.times do # rubocop:disable Lint/UselessTimes
-      break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index + 1], @position[1].to_i - 2].side == @side
+      position = []
+      break if @position[1].to_i - 1 < 1
+      break if COLUMNS[@column_index + 1].nil?
 
-      @moves << [COLUMNS[@column_index + 1], @position[1].to_i - 2]
+      position << [COLUMNS[@column_index + 1], @position[1].to_i - 2]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
   def down_left
     1.times do # rubocop:disable Lint/UselessTimes
-      break if @position[1].to_i + 1 > 8
-      break if board[COLUMNS[@column_index + 1], @position[1].to_i - 2].side == @side
+      position = []
+      break if @position[1].to_i - 1 < 1
+      break if COLUMNS[@column_index - 1] == "h"
 
-      @moves << [COLUMNS[@column_index + 1], @position[1].to_i - 2]
+      position << [COLUMNS[@column_index - 1], @position[1].to_i - 2]
+      break if !position.is_a?(Array) && (position&.side == @side)
+      next if @position == position.flatten
+
+      @moves << position.flatten
+      break if !position.is_a?(Array) && position&.value
     end
   end
 
