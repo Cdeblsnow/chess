@@ -46,17 +46,45 @@ class Board
     @moves = []
     @moves << "For your selected pice these are your possible movements: "
     piece = @board_tiles[position[0]][position[1].to_i]
-    piece.possible_moves.each_with_index do |m, i|
+    move_set = refine_moves(piece, piece.possible_moves)
+    move_set.each_with_index do |m, i|
       @moves << ["#{i + 1}:", "#{m}"]
     end
     puts @moves.join(" ")
   end
 
+  # from input to player move
   def select_piece_to(player_move, input)
     piece = @board_tiles[input[0]][input[1].to_i]
     moves = piece.possible_moves
     piece_move(player_move, input)
     puts "#{piece.value} moves to => #{moves[player_move - 1]}"
+  end
+
+  # remove moves that collide with pieces from the same side
+  def refine_moves(piece, moves)
+    moves_grouped = group_array(moves)
+    new_moves = []
+    moves_grouped.each do |column|
+      column.each do |move|
+        tile = @board_tiles[move[0]][move[1]]
+        if tile.is_a?(Array)
+
+          new_moves << move
+        elsif tile.side != piece.side # rubocop:disable Lint/DuplicateBranch
+
+          new_moves << move
+        else
+          break
+        end
+      end
+    end
+    new_moves
+  end
+
+  def group_array(moves)
+    new = moves.group_by { |column| column[0] }
+    new.values
   end
 
   def piece_move(player_move, input)
@@ -65,7 +93,6 @@ class Board
     piece_update(@board_tiles[input[0]][input[1].to_i], column, row)
     tiles_update(@board_tiles[input[0]][input[1].to_i], column, row)
     @board_tiles[input[0]][input[1].to_i] = []
-    puts @board_tiles[column][row]
   end
 
   def piece_update(piece, column, row)
