@@ -70,8 +70,9 @@ class Board
         tile = @board_tiles[move[0]][move[1]]
         if tile.is_a?(Array)
 
-          new_moves << move
-        elsif tile.side != piece.side # rubocop:disable Lint/DuplicateBranch
+          new_moves << move unless piece.is_a?(Pawn) && move[0] != piece.position[0]
+          # avoid adding the diagonals as possible moves for pawns when opposite side piece is not present
+        elsif tile.side != piece.side
 
           new_moves << move
         else
