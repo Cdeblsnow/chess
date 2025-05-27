@@ -1,5 +1,5 @@
 class Pawn
-  attr_reader :value, :position
+  attr_reader :value, :side, :position, :first_move
 
   COLUMNS = %w[a b c d e f g h].freeze
 
@@ -7,12 +7,15 @@ class Pawn
     case side
     when "black"
       @value = "\u{265F}"
+      @side = "black"
     when "white"
       @value = "\u{2659}"
+      @side = "white"
     end
     @position = position
     @first_move = false
     @moves = []
+    update_column_index
   end
 
   def update_column_index
@@ -23,15 +26,22 @@ class Pawn
     @moves = []
     case @value
     when "\u{265F}"
-      @moves << [COLUMNS[@column_index], @position[1].to_i + 2]
+      w_move_by_two
+      w_move_by_one
+      w_left_diagonal
+      w_right_diagonal
     when "\u{2659}"
-      @moves << [COLUMNS[@column_index].to_i - 2]
+      b_move_by_two
+      b_move_by_one
+      b_left_diagonal
+      b_right_diagonal
+
     end
     @moves
   end
 
   def w_move_by_two
-    @moves << [COLUMNS[@column_index], @position[1].to_i + 2]
+    @moves << [COLUMNS[@column_index], @position[1].to_i + 2] if @first_move == false
   end
 
   def w_move_by_one
@@ -40,7 +50,6 @@ class Pawn
       break if @position[1].to_i + 1 > 8
 
       position << [COLUMNS[@column_index], @position[1].to_i + 1]
-      break if !position.is_a?(Array) && (position&.side == @side)
 
       @moves << position.flatten
     end
@@ -52,9 +61,8 @@ class Pawn
       break if @position[1].to_i + 1 > 8
 
       position << [COLUMNS[@column_index + 1], @position[1].to_i + 1]
-      break if !position.is_a?(Array) && (position&.side == @side)
 
-      @moves << position.flatten if !position.is_a?(Array) && (position&.side != @side)
+      @moves << position.flatten
     end
   end
 
@@ -65,14 +73,13 @@ class Pawn
       break if COLUMNS[@column_index - 1] == "h"
 
       position << [COLUMNS[@column_index - 1], @position[1].to_i + 1]
-      break if !position.is_a?(Array) && (position&.side == @side)
 
-      @moves << position.flatten if !position.is_a?(Array) && (position&.side != @side)
+      @moves << position.flatten
     end
   end
 
   def b_move_by_two
-    @moves << [COLUMNS[@column_index], @position[1].to_i - 2]
+    @moves << [COLUMNS[@column_index], @position[1].to_i - 2] if @first_move == false
   end
 
   def b_move_by_one
@@ -81,7 +88,6 @@ class Pawn
       break if @position[1].to_i - 1 < 1
 
       position << [COLUMNS[@column_index], @position[1].to_i - 1]
-      break if !position.is_a?(Array) && (position&.side == @side)
 
       @moves << position.flatten
     end
@@ -93,9 +99,8 @@ class Pawn
       break if @position[1].to_i - 1 < 1
 
       position << [COLUMNS[@column_index + 1], @position[1].to_i - 1]
-      break if !position.is_a?(Array) && (position&.side == @side)
 
-      @moves << position.flatten if !position.is_a?(Array) && (position&.side != @side)
+      @moves << position.flatten
     end
   end
 
@@ -106,9 +111,8 @@ class Pawn
       break if COLUMNS[@column_index - 1] == "h"
 
       position << [COLUMNS[@column_index - 1], @position[1].to_i - 1]
-      break if !position.is_a?(Array) && (position&.side == @side)
 
-      @moves << position.flatten if !position.is_a?(Array) && (position&.side != @side)
+      @moves << position.flatten
     end
   end
 

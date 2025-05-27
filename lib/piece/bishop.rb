@@ -1,13 +1,15 @@
 class Bishop
-  attr_reader :value, :position
+  attr_reader :value, :side, :position
 
   COLUMNS = %w[a b c d e f g h].freeze
   def initialize(side, position)
     case side
     when "black"
       @value = "\u{265D}"
+      @side = "black"
     when "white"
       @value = "\u{2657}"
+      @side = "white"
     end
     @position = position
     @column_index = update_column_index
