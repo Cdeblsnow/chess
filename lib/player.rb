@@ -5,7 +5,7 @@ require_relative "piece/knight"
 require_relative "piece/queen"
 require_relative "piece/rook"
 class Player
-  attr_reader :piece_set, :name
+  attr_reader :piece_set, :name, :side
 
   COLUMNS = %w[a b c d e f g h].freeze
   def initialize(name)
@@ -35,10 +35,8 @@ class Player
     @piece_set << set
   end
 
-  # since downto is used for the display, the order had to be interchanged so it reflects correctly when
-  # printed on the console
   def create_pawns
-    if @side == "white"
+    if @side == "black"
       8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 7])) }
     else
       8.times { |i| @piece_set << (Pawn.new(@side, [COLUMNS[i], 2])) }
@@ -46,7 +44,7 @@ class Player
   end
 
   def create_king
-    @piece_set << if @side == "white"
+    @piece_set << if @side == "black"
                     King.new(@side, ["e", 8])
                   else
                     King.new(@side, ["e", 1])
@@ -54,7 +52,7 @@ class Player
   end
 
   def create_queen
-    @piece_set << if @side == "white"
+    @piece_set << if @side == "black"
                     Queen.new(@side, ["d", 8])
                   else
                     Queen.new(@side, ["d", 1])
@@ -62,7 +60,7 @@ class Player
   end
 
   def create_bishops
-    if @side == "white"
+    if @side == "black"
       @piece_set << (Bishop.new(@side, ["c", 8]))
       @piece_set << (Bishop.new(@side, ["f", 8]))
     else
@@ -72,7 +70,7 @@ class Player
   end
 
   def create_knights
-    if @side == "white"
+    if @side == "black"
       @piece_set << (Knight.new(@side, ["b", 8]))
       @piece_set << (Knight.new(@side, ["g", 8]))
     else
@@ -82,7 +80,7 @@ class Player
   end
 
   def create_rooks
-    if @side == "white"
+    if @side == "black"
       @piece_set << (Rook.new(@side, ["a", 8]))
       @piece_set << (Rook.new(@side, ["h", 8]))
     else
