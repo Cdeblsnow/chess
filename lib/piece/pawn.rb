@@ -5,12 +5,12 @@ class Pawn
 
   def initialize(side, position)
     case side
-    when "black"
-      @value = "\u{265F}"
-      @side = "black"
     when "white"
-      @value = "\u{2659}"
+      @value = "\u{265F}"
       @side = "white"
+    when "black"
+      @value = "\u{2659}"
+      @side = "black"
     end
     @position = position
     @first_move = false

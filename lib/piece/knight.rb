@@ -4,12 +4,12 @@ class Knight
   COLUMNS = %w[a b c d e f g h].freeze
   def initialize(side, position)
     case side
-    when "black"
-      @value = "\u{265E}"
-      @side = "black"
     when "white"
-      @value = "\u{2658}"
+      @value = "\u{265E}"
       @side = "white"
+    when "black"
+      @value = "\u{2658}"
+      @side = "black"
     end
     @position = position
     @column_index = update_column_index
@@ -22,7 +22,14 @@ class Knight
 
   def possible_moves
     @moves = []
-
+    up_left
+    up_right
+    right_up
+    right_down
+    down_right
+    down_left
+    left_down
+    left_up
     @moves
   end
 

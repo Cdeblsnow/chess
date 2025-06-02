@@ -4,12 +4,12 @@ class Rook
   COLUMNS = %w[a b c d e f g h].freeze
   def initialize(side, position)
     case side
-    when "black"
-      @value = "\u{265C}"
-      @side = "black"
     when "white"
-      @value = "\u{2656}"
+      @value = "\u{265C}"
       @side = "white"
+    when "black"
+      @value = "\u{2656}"
+      @side = "black"
     end
     @position = position
     @column_index = update_column_index
