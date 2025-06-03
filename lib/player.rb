@@ -15,6 +15,10 @@ class Player
     @piece_set = []
   end
 
+  def deliver_king
+    @piece_set[0]
+  end
+
   def add_point
     @points += 1
   end
