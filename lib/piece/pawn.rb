@@ -59,6 +59,7 @@ class Pawn
     1.times do # rubocop:disable Lint/UselessTimes
       position = []
       break if @position[1].to_i + 1 > 8
+      break if COLUMNS[@column_index + 1].nil?
 
       position << [COLUMNS[@column_index + 1], @position[1].to_i + 1]
 
@@ -97,6 +98,7 @@ class Pawn
     1.times do # rubocop:disable Lint/UselessTimes
       position = []
       break if @position[1].to_i - 1 < 1
+      break if COLUMNS[@column_index + 1].nil?
 
       position << [COLUMNS[@column_index + 1], @position[1].to_i - 1]
 

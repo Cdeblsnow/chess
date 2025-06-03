@@ -1,5 +1,9 @@
+require_relative "movement"
+
 class King
   attr_reader :value, :side, :position
+
+  include Movement
 
   COLUMNS = %w[a b c d e f g h].freeze
   def initialize(side, position)
@@ -28,8 +32,10 @@ class King
     down_one
     left_one
     right_one
-    diagonal_left_one
-    diagonal_right_one
+    diagonal_right_up_one
+    diagonal_left_up_one
+    diagonal_right_down_one
+    diagonal_left_down_one
     @moves
   end
 

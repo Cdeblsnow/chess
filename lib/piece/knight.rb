@@ -70,7 +70,7 @@ class Knight
     1.times do # rubocop:disable Lint/UselessTimes
       position = []
       break if @position[1].to_i + 1 > 8
-      break if COLUMNS[@column_index + 1].nil?
+      break if COLUMNS[@column_index + 2].nil?
 
       position << [COLUMNS[@column_index + 2], @position[1].to_i + 1]
       break if !position.is_a?(Array) && (position&.side == @side)
@@ -85,7 +85,7 @@ class Knight
     1.times do # rubocop:disable Lint/UselessTimes
       position = []
       break if @position[1].to_i - 1 < 1
-      break if COLUMNS[@column_index + 1].nil?
+      break if COLUMNS[@column_index + 2].nil?
 
       position << [COLUMNS[@column_index + 2], @position[1].to_i - 1]
       break if !position.is_a?(Array) && (position&.side == @side)
