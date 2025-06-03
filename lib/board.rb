@@ -42,10 +42,17 @@ class Board
     @has_been_filled = true
   end
 
+  def valid_piece?(player, position)
+    piece = @board_tiles[position[0]][position[1].to_i]
+    return false if piece.is_a?(Array)
+
+    player.side == piece.side
+  end
+
   def present_move_choices(position) # I have to grap the choice, from moves
     @moves = []
-    @moves << "For your selected pice these are your possible movements: "
     piece = @board_tiles[position[0]][position[1].to_i]
+    @moves << "These are your #{piece.class} possible movements: "
     move_set = refine_moves(piece, piece.possible_moves)
     move_set.each_with_index do |m, i|
       @moves << ["#{i + 1}:", "#{m}"]
@@ -76,7 +83,7 @@ class Board
 
           new_moves << move
         else
-          break
+          next
         end
       end
     end
@@ -102,5 +109,70 @@ class Board
 
   def tiles_update(tile, column, row)
     @board_tiles[column][row] = tile
+  end
+
+  # check everything below here
+  def check?(king)
+    grouped_moves = group_array(king.possible_check_pos)
+    switch = false
+    threats = threat_tiles(grouped_moves, king) # get the antagonistic pieces in all direction
+    threats.each do |tile|
+      set = refine_moves(tile, tile.possible_moves) # check is said pieces can reach the king in one move
+      switch = true if set.any?(king.position)
+      break if switch == true
+    end
+    switch
+  end
+
+  def mate?(king, enemy_pieces)
+    king_range = group_array(king.possible_moves)
+    switch = my_method(remove_allies(king_range), enemy_pieces)
+    switch[0]
+  end
+
+  def my_method(king_range, enemy_pieces)
+    switch = [false, 0]
+    enemy_pieces.each do |piece|
+      next if piece.is_a?(King)
+
+      set = refine_moves(piece, piece.possible_moves)
+      king_range.each do |position|
+        switch[0] = false
+        next unless set.any?(position)
+
+        switch[0] = true
+        switch[1] += 1
+        break
+      end
+      break if switch[1] >= 2
+    end
+    switch
+  end
+
+  def remove_allies(king_range)
+    viable_moves = []
+    king_range.each do |column|
+      column.each do |move|
+        tile = @board_tiles[move[0]][move[1]]
+
+        viable_moves << move if tile.is_a?(Array)
+      end
+    end
+    viable_moves
+  end
+
+  def threat_tiles(grouped_moves, king)
+    possible_dangers = []
+    grouped_moves.each do |column|
+      column.each do |move|
+        tile = @board_tiles[move[0]][move[1]]
+        next if tile.is_a?(Array)
+        next unless tile.side != king.side
+
+        possible_dangers << tile
+        # only adds antagonistic pieces
+      end
+    end
+    possible_dangers
   end
 end
