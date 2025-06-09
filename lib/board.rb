@@ -54,10 +54,14 @@ module Board
     piece = @board_tiles[position[0]][position[1].to_i]
     @moves << "These are your #{piece.class} possible movements: "
     move_set = refine_moves(piece, piece.possible_moves)
-    move_set.each_with_index do |m, i|
-      @moves << ["#{i + 1}:", "#{m}"]
+    if move_set.positive?
+      move_set.each_with_index do |m, i|
+        @moves << ["#{i + 1}:", "#{m}"]
+      end
+      puts @moves.join(" ")
+    else
+      0
     end
-    puts @moves.join(" ")
   end
 
   # from input to player move
@@ -66,24 +70,32 @@ module Board
     moves = piece.possible_moves
     piece_move(player_move, input)
     puts "#{piece.value} moves to => #{moves[player_move - 1]}"
+    piece.position
   end
 
   # remove moves that collide with pieces from the same side
   def refine_moves(piece, moves)
     moves_grouped = group_array(moves)
     new_moves = []
+    restringed_rows = []
     moves_grouped.each do |column|
       column.each do |move|
         tile = @board_tiles[move[0]][move[1]]
         if tile.is_a?(Array)
-
-          new_moves << move unless piece.is_a?(Pawn) && move[0] != piece.position[0]
           # avoid adding the diagonals as possible moves for pawns when opposite side piece is not present
+          pawn_with_no_diagonal_enemies = piece.is_a?(Pawn) && move[0] != piece.position[0]
+          row_blocked = restringed_rows.include?(move[1])
+
+          new_moves << move unless pawn_with_no_diagonal_enemies || row_blocked
+
         elsif tile.side != piece.side
 
           new_moves << move
+          restringed_rows << move[1]
+          break
         else
-          next
+          restringed_rows << move[1]
+          break
         end
       end
     end
