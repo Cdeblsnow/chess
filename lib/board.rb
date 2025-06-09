@@ -54,7 +54,7 @@ module Board
     piece = @board_tiles[position[0]][position[1].to_i]
     @moves << "These are your #{piece.class} possible movements: "
     move_set = refine_moves(piece, piece.possible_moves)
-    if move_set.positive?
+    if move_set.length.positive?
       move_set.each_with_index do |m, i|
         @moves << ["#{i + 1}:", "#{m}"]
       end
