@@ -1,8 +1,11 @@
 require_relative "player"
 require_relative "piece/pawn"
+require_relative "board"
 
 class Game
   attr_reader :player_list
+
+  include Board
 
   def initialize
     @player_list = []

@@ -1,5 +1,5 @@
-class Board
-  def initialize
+module Board
+  def initialize_board
     @board_tiles = ("a".."h").to_h { |i| [i, Array.new(9) { [] }] }
     @has_been_filled = false
     @moves = []
