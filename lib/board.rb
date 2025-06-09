@@ -94,8 +94,13 @@ module Board
           restringed_rows << move[1]
           break
         else
+          break if piece.position[0] == move[0]
+
           restringed_rows << move[1]
-          break
+          # the first line seeks pieces of the same side vertically
+          # the second line does the same horizontally
+
+          next
         end
       end
     end
