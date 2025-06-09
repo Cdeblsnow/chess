@@ -33,4 +33,10 @@ class Game
   def fill_player_pieces
     @player_list.each(&:fill_set)
   end
+
+  def match_end?(king, next_move)
+    return true if king.position == next_move
+
+    false
+  end
 end
