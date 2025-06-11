@@ -38,4 +38,17 @@ describe Game do
       expect(player1.piece_set.length).to eq(16)
     end
   end
+
+  describe "#create_saves" do
+    subject(:game_save) { described_class.new }
+    it "creates the saving directory for the game" do
+      game_save.create_saves
+      expect(Dir.exist?("saved_games")).to eq(true)
+    end
+
+    it "creates the saving file for the game" do
+      game_save.create_saves
+      expect(File.exist?("saved_games/saves.json")).to eq(true)
+    end
+  end
 end
