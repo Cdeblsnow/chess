@@ -1,6 +1,8 @@
 require_relative "player"
 require_relative "piece/pawn"
 require_relative "board"
+require "json"
+require "fileutils"
 
 class Game
   attr_reader :player_list
@@ -38,5 +40,18 @@ class Game
     return true if king.position == next_move
 
     false
+  end
+
+  def create_saves # test
+    FileUtils.mkdir_p("saved_games")
+    File.write("saved_games/saves.json", "[]") unless File.exist?("saved_games/saves.jason")
+  end
+
+  def save_games
+    File.open("saved_games/saves.jason", "w") do |file|
+      file.write(JSON.pretty_generate(Players.to_json))
+      file.write(JSON.pretty_generate(Game.to_json))
+      file.write(JSON.pretty_generate(Board.to_json))
+    end
   end
 end
