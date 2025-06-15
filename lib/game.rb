@@ -43,19 +43,27 @@ class Game
     false
   end
 
-  def create_saves # test
+  def create_saves
     FileUtils.mkdir_p("saved_games")
-    File.write("saved_games/saves.json", "[]") unless File.exist?("saved_games/saves.jason")
+    File.write("saved_games/saves.json", "[]") unless File.exist?("saved_games/saves.json")
   end
 
   def save_game
     my_data = JSON.parse(File.read("saved_games/saves.json"))
-    my_data << [to_json, Board.to_json]
+    my_data << to_json(save_name)
     File.write("saved_games/saves.json", JSON.pretty_generate(my_data))
   end
 
-  def to_json(*_args)
+  def save_name
+    puts "Add a name for this save or press enter"
+    name = gets.chomp
+    name = Time.now.strftime("%d/%m/%Y %H:%M") if name == ""
+    name
+  end
+
+  def to_json(name)
     JSON.dump({
+                name: name,
                 player_list: @player_list, # use this when loading to set the players
                 columns: @columns,
                 board_tiles: @board_tiles,
