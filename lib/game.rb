@@ -18,6 +18,7 @@ class Game
     (1..2).each do |i|
       puts "Please add player#{i} name"
       player_name = gets.chomp
+      player_name = "Player#{i}" if player_name == ""
       @player_list << Player.new(player_name)
     end
   end
@@ -47,11 +48,24 @@ class Game
     File.write("saved_games/saves.json", "[]") unless File.exist?("saved_games/saves.jason")
   end
 
-  def save_games
-    File.open("saved_games/saves.jason", "w") do |file|
-      file.write(JSON.pretty_generate(Players.to_json))
-      file.write(JSON.pretty_generate(Game.to_json))
-      file.write(JSON.pretty_generate(Board.to_json))
-    end
+  def save_game
+    my_data = JSON.parse(File.read("saved_games/saves.json"))
+    my_data << [to_json, Board.to_json]
+    File.write("saved_games/saves.json", JSON.pretty_generate(my_data))
+  end
+
+  def to_json(*_args)
+    JSON.dump({
+                player_list: @player_list, # use this when loading to set the players
+                columns: @columns,
+                board_tiles: @board_tiles,
+                filled: @has_been_filled,
+                moves: @moves
+              })
+  end
+
+  def from_json(*string)
+    data = JSON.parse string
+    new(data["player_list"], data["columns"], data["board_tiles"], data["has_been_filled"], data["moves"])
   end
 end

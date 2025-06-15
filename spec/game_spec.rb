@@ -51,4 +51,49 @@ describe Game do
       expect(File.exist?("saved_games/saves.json")).to eq(true)
     end
   end
+
+  describe "#save_game" do
+    subject(:game_save) { described_class.new }
+    before do
+      game_save.initialize_board
+      game_save.player_init
+      game_save.define_side
+      players = game_save.player_list
+      game_save.display(players)
+      game_save.create_saves
+      input = ""
+      allow(input).to receive(:gets).and_return("save")
+      game_save.save_game
+    end
+
+    it "The file saved is not empty" do
+      content = File.read("saved_games/saves.json")
+      expect(content.size).to be > 0
+    end
+
+    it "The saved file contains 'player_list' instance var" do
+      content = File.read("saved_games/saves.json")
+      expect(content).to include("player_list")
+    end
+
+    it "The saved file contains 'columns' instance var" do
+      content = File.read("saved_games/saves.json")
+      expect(content).to include("columns")
+    end
+
+    it "The saved file contains 'board_tiles' instance var" do
+      content = File.read("saved_games/saves.json")
+      expect(content).to include("board_tiles")
+    end
+
+    it "The saved file contains 'filled' instance var" do
+      content = File.read("saved_games/saves.json")
+      expect(content).to include("filled")
+    end
+
+    it "The saved file contains 'moves' instance var" do
+      content = File.read("saved_games/saves.json")
+      expect(content).to include("moves")
+    end
+  end
 end
