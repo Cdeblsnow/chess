@@ -92,4 +92,8 @@ class Rook
     @position = new_position
     update_column_index
   end
+
+  def to_h
+    { Rook: [@side, @position] }
+  end
 end

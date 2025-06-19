@@ -10,17 +10,12 @@ class Player
   COLUMNS = %w[a b c d e f g h].freeze
   def initialize(name)
     @name = name
-    @points = 0
     @side = "" # make aleatory pick white/black
     @piece_set = []
   end
 
   def deliver_king
     @piece_set[0]
-  end
-
-  def add_point
-    @points += 1
   end
 
   def define_side(side)
@@ -100,5 +95,27 @@ class Player
     create_bishops
     create_knights
     create_pawns
+  end
+
+  def to_json(*_args)
+    {
+      name: @name,
+      side: @side,
+      piece_set: @piece_set.map(&:to_h)
+    }
+  end
+
+  def load_game(*load) # will have to create new instances of player and then set it
+    @name = load["name"]
+    @side = load["side"]
+    @piece_set = load["piece_set"]
+  end
+
+  def re_fill_set(set)
+    set.each do |hash|
+      hash.each do |key, value|
+        @piece_set << Object.const_get(key).new(value[0], value[1])
+      end
+    end
   end
 end

@@ -42,4 +42,8 @@ class Queen
     @position = new_position
     update_column_index
   end
+
+  def to_h
+    { Queen: [@side, @position] }
+  end
 end

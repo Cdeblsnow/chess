@@ -145,4 +145,8 @@ class King
     @position = new_position
     update_column_index
   end
+
+  def to_h
+    { King: [@side, @position] }
+  end
 end

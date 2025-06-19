@@ -160,4 +160,8 @@ class Knight
     @position = new_position
     update_column_index
   end
+
+  def to_h
+    { Knight: [@side, @position] }
+  end
 end

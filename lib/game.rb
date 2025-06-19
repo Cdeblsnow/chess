@@ -48,9 +48,14 @@ class Game
     File.write("saved_games/saves.json", "[]") unless File.exist?("saved_games/saves.json")
   end
 
-  def save_game
+  def save_game(player1, player2)
     my_data = JSON.parse(File.read("saved_games/saves.json"))
-    my_data << to_json(save_name)
+    match = {
+      name: save_name,
+      player1: player1,
+      player2: player2
+    }
+    my_data << match
     File.write("saved_games/saves.json", JSON.pretty_generate(my_data))
   end
 
@@ -62,18 +67,20 @@ class Game
   end
 
   def to_json(name)
-    JSON.dump({
-                name: name,
-                player_list: @player_list, # use this when loading to set the players
-                columns: @columns,
-                board_tiles: @board_tiles,
-                filled: @has_been_filled,
-                moves: @moves
-              })
+    # do not use dump with pretty generate
+    {
+      save_name: name
+    }
   end
 
-  def from_json(*string)
-    data = JSON.parse string
-    new(data["player_list"], data["columns"], data["board_tiles"], data["has_been_filled"], data["moves"])
+  def load_game(data)
+    data.each do |info, value|
+      next if info == "name"
+
+      current = Player.new(value["name"])
+      current.define_side(value["side"])
+      current.re_fill_set(value["piece_set"])
+      @player_list << current
+    end
   end
 end

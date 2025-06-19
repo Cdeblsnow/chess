@@ -104,4 +104,8 @@ class Bishop
     @position = new_position
     update_column_index
   end
+
+  def to_h
+    { Bishop: [@side, @position] }
+  end
 end

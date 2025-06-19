@@ -124,5 +124,7 @@ class Pawn
     update_column_index
   end
 
-  # update pawn to avoid claashing with pices of the same color and to stop in front of pieces of other color
+  def to_h
+    { Pawn: [@side, @position] }
+  end
 end
