@@ -12,6 +12,11 @@ module Board
     puts "  a     b      c     d     e     f     g     h\n\n"
   end
 
+  def redisplay(list)
+    puts "\e[2J\e[H"
+    display(list)
+  end
+
   def tiles
     position = +""
     8.downto(1) do |index|
