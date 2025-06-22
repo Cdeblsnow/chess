@@ -54,14 +54,15 @@ module Board
     player.side == piece.side
   end
 
-  def present_move_choices(position) # I have to grap the choice, from moves
+  # I have to grap the choice, from moves
+  def present_move_choices(position)
     @moves = []
     piece = @board_tiles[position[0]][position[1].to_i]
     @moves << "These are your #{piece.class} possible movements: "
     move_set = refine_moves(piece, piece.possible_moves)
     if move_set.length.positive?
       move_set.each_with_index do |m, i|
-        @moves << ["#{i + 1}:", "#{m}"]
+        @moves << ["#{i + 1}:", m.to_s]
       end
       puts @moves.join(" ")
     else

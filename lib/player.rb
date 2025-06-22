@@ -105,7 +105,8 @@ class Player
     }
   end
 
-  def load_game(*load) # will have to create new instances of player and then set it
+  # will have to create new instances of player and then set it
+  def load_game(*load)
     @name = load["name"]
     @side = load["side"]
     @piece_set = load["piece_set"]
